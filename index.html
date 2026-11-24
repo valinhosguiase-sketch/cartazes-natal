@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Cartazes de Natal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: cinema-lobby gallery — film cards in two sections, posters shown inside an A3 frame, sticky vote bar at the bottom */
+:root{
+  --bg:#F4F5F2; --paper:#FFFFFF; --ink:#1A1D22; --muted:#5C6168; --line:#DADDD6;
+  --accent:#A3192A; --accent-ink:#FFFFFF; --gold:#8A6A16;
+  --ok:#1E7A45; --ok-bg:#E3F3E9; --mid:#8A5A00; --mid-bg:#FBF0D9; --bad:#A3192A; --bad-bg:#FBE4E6;
+  --frame:#E9EBE6;
+  --f-display:"DM Serif Display", Georgia, "Times New Roman", serif;
+  --f-body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14161A; --paper:#1D2026; --ink:#EEF0F2; --muted:#A3A8AF; --line:#2E333B;
+  --accent:#E0475A; --accent-ink:#14161A; --gold:#D9B45A;
+  --ok:#6FD39A; --ok-bg:#16301F; --mid:#F0C163; --mid-bg:#33290F; --bad:#FF8A95; --bad-bg:#3A1A1F;
+  --frame:#262A31; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14161A; --paper:#1D2026; --ink:#EEF0F2; --muted:#A3A8AF; --line:#2E333B;
+  --accent:#E0475A; --accent-ink:#14161A; --gold:#D9B45A;
+  --ok:#6FD39A; --ok-bg:#16301F; --mid:#F0C163; --mid-bg:#33290F; --bad:#FF8A95; --bad-bg:#3A1A1F;
+  --frame:#262A31; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 140px}
+header{display:grid;gap:12px;margin-bottom:28px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(36px,7vw,60px);line-height:1;margin:0;text-wrap:balance}
+.lead{max-width:62ch;color:var(--muted);margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted);margin-top:4px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.name-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}
+.name-row label{font-weight:600}
+.name-row input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);min-width:0;flex:1 1 200px;max-width:320px}
+h2{font-family:var(--f-display);font-weight:400;font-size:30px;margin:40px 0 16px;text-wrap:balance}
+.films{display:grid;gap:20px}
+.film{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px}
+.film-head{display:flex;gap:14px;align-items:baseline}
+.num{font-family:var(--f-display);font-size:28px;color:var(--accent);line-height:1;min-width:1.2em}
+.film h3{margin:0;font-size:19px;font-weight:600;text-wrap:balance}
+.film .orig{color:var(--muted);font-size:14px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.opts.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){.opts.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.opt{display:grid;gap:8px;border:2px solid transparent;border-radius:12px;padding:8px;cursor:pointer;background:none;font:inherit;color:inherit;text-align:left;transition:border-color .15s,background .15s}
+.opt:hover{background:var(--bg)}
+.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt[aria-checked="true"]{border-color:var(--accent);background:var(--bg)}
+.a3{aspect-ratio:297/420;max-width:100%;background:var(--frame);border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.a3 img{width:100%;height:100%;object-fit:contain;display:block}
+.a3 .tag{position:absolute;top:6px;left:6px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:var(--paper);color:var(--muted);padding:2px 6px;border-radius:4px;font-weight:600}
+.opt-title{font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.check{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center}
+.opt[aria-checked="true"] .check{border-color:var(--accent);background:var(--accent)}
+.opt[aria-checked="true"] .check::after{content:"";width:6px;height:10px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}
+.px{font-family:var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.chip{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.chip.ok{color:var(--ok);background:var(--ok-bg)} .chip.mid{color:var(--mid);background:var(--mid-bg)} .chip.bad{color:var(--bad);background:var(--bad-bg)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.tally{font-size:12px;color:var(--muted);min-height:1em}
+.tally b{color:var(--ink)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+.bar-in{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.progress{font-size:14px;color:var(--muted)} .progress b{color:var(--ink);font-variant-numeric:tabular-nums}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+button.act{font:inherit;font-weight:600;font-size:14px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+button.act.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.act:disabled{opacity:.5;cursor:not-allowed}
+button.act:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.status{font-size:13px;color:var(--muted);width:100%}
+.status:empty{display:none}
+.note{font-size:13px;color:var(--muted);max-width:70ch;margin-top:32px;border-top:1px solid var(--line);padding-top:16px}
+#copybox{width:100%;min-height:120px;font:12px var(--f-mono);border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--ink)}
+@media (max-width:420px){.film{padding:14px}.opts{gap:8px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Exposição · impressão A3</div>
+    <h1>Cartazes de Natal</h1>
+    <p class="lead">Para cada filme há o cartaz original de cinema (EUA) e a versão brasileira. Toque no cartaz que você prefere. No Grinch, escolha também qual dos dois filmes. Cada cartaz aparece dentro de uma moldura no formato A3, para mostrar como fica no papel.</p>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--ok)"></i>Ótima em A3</span>
+      <span><i class="dot" style="background:var(--mid)"></i>Boa vista a 1 metro</span>
+      <span><i class="dot" style="background:var(--bad)"></i>Fraca: fica borrada de perto</span>
+    </div>
+    <div class="name-row">
+      <label for="nome">Seu nome</label>
+      <input id="nome" type="text" autocomplete="given-name" placeholder="Para o voto no WhatsApp">
+    </div>
+  </header>
+
+  <section>
+    <h2>Clássicos antigos</h2>
+    <div class="films" id="g1"></div>
+  </section>
+  <section>
+    <h2>Mais contemporâneos</h2>
+    <div class="films" id="g2"></div>
+  </section>
+
+  <p class="note">As versões brasileiras dos filmes mais antigos vêm de lançamentos em DVD e streaming: os cartazes de cinema daquela época no Brasil não existem em boa resolução. A qualidade indicada considera o arquivo impresso em A3 (29,7 × 42 cm). Os cartazes de cinema são um pouco mais compridos que o A3, por isso sobra uma faixa nas laterais, que pode virar uma legenda com título e ano.</p>
+</div>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="progress"><b id="count">0</b> de <b id="total">12</b> escolhidos</div>
+    <div class="btns">
+      <button class="act primary" id="copy" type="button">Copiar voto para o WhatsApp</button>
+    </div>
+    <div class="status" id="status" role="status"></div>
+    <textarea id="copybox" hidden readonly aria-label="Texto do voto"></textarea>
+  </div>
+</div>
+
+<script>
+const PX = {"wonderful_us":[1985,3000,170],"wonderful_br":[960,1440,82],"miracle_us":[2000,3000,171],"miracle_br":[1696,2528,145],"white_us":[1942,2913,166],"white_br":[2000,3000,171],"story_us":[1930,2895,165],"story_br":[2000,3000,171],"home_us":[1951,2926,167],"home_br":[2000,3000,171],"jack_us":[1915,2873,164],"jack_br":[2000,3000,171],"grinch2000_us":[1785,2669,153],"grinch2000_br":[1000,1500,86],"grinch2018_us":[2000,3000,171],"grinch2018_br":[2000,3000,171],"love_us":[1215,1800,104],"love_br":[1333,2000,114],"elf_us":[2000,3000,171],"elf_br":[1400,2100,120],"polar_us":[1939,2909,166],"polar_br":[2000,3000,171],"klaus_us":[1481,2222,127],"klaus_br":[1500,2222,128],"chronicles_us":[1480,2221,127],"chronicles_br":[1500,2222,128]};
+const FILMS = [
+  {id:"wonderful",g:1,t:"A Felicidade Não Se Compra",o:"It's a Wonderful Life",y:"1946"},
+  {id:"miracle",g:1,t:"De Ilusão Também Se Vive",o:"Miracle on 34th Street",y:"1947"},
+  {id:"white",g:1,t:"Natal Branco",o:"White Christmas",y:"1954"},
+  {id:"story",g:1,t:"Uma História de Natal",o:"A Christmas Story",y:"1983"},
+  {id:"home",g:1,t:"Esqueceram de Mim",o:"Home Alone",y:"1990"},
+  {id:"jack",g:1,t:"O Estranho Mundo de Jack",o:"The Nightmare Before Christmas",y:"1993"},
+  {id:"grinch",g:2,t:"O Grinch",o:"2000 (Jim Carrey) ou 2018 (animação)",y:"",four:true},
+  {id:"love",g:2,t:"Simplesmente Amor",o:"Love Actually",y:"2003"},
+  {id:"elf",g:2,t:"Um Duende em Nova York",o:"Elf",y:"2003"},
+  {id:"polar",g:2,t:"O Expresso Polar",o:"The Polar Express",y:"2004"},
+  {id:"klaus",g:2,t:"Klaus",o:"Klaus",y:"2019"},
+  {id:"chronicles",g:2,t:"Crônicas de Natal",o:"The Christmas Chronicles",y:"2018"}
+];
+function optionsFor(f){
+  if(f.four) return [
+    {v:"2000-us",img:"grinch2000_us",label:"2000 · Original (EUA)"},
+    {v:"2000-br",img:"grinch2000_br",label:"2000 · Brasileira"},
+    {v:"2018-us",img:"grinch2018_us",label:"2018 · Original (EUA)"},
+    {v:"2018-br",img:"grinch2018_br",label:"2018 · Brasileira"}];
+  return [{v:"us",img:f.id+"_us",label:"Original (EUA)"},{v:"br",img:f.id+"_br",label:"Versão brasileira"}];
+}
+function labelOf(fid,v){const f=FILMS.find(x=>x.id===fid);const o=optionsFor(f).find(x=>x.v===v);return o?o.label:"";}
+function quality(dpi){return dpi>=150?["ok","Ótima em A3"]:dpi>=115?["mid","Boa a 1 m"]:["bad","Fraca"];}
+
+let picks={}, tallies={}, myId=null, db=null;
+try{picks=JSON.parse(localStorage.getItem("cartazes-picks")||"{}")||{};}catch(e){picks={};}
+const nome=document.getElementById("nome");
+try{nome.value=localStorage.getItem("cartazes-nome")||"";}catch(e){}
+nome.addEventListener("input",()=>{try{localStorage.setItem("cartazes-nome",nome.value);}catch(e){}});
+
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+
+function build(){
+  let n1=0,n2=0;
+  for(const f of FILMS){
+    const num=f.g===1?++n1:++n2;
+    const card=el("article","film");card.dataset.film=f.id;
+    const head=el("div","film-head");head.append(el("span","num",String(num)));
+    const ht=el("div");ht.append(el("h3",null,f.t));ht.append(el("div","orig",f.y?`${f.o} · ${f.y}`:f.o));head.append(ht);
+    const opts=el("div","opts"+(f.four?" four":""));opts.setAttribute("role","radiogroup");opts.setAttribute("aria-label",f.t);
+    for(const o of optionsFor(f)){
+      const [w,h,dpi]=PX[o.img];const [qc,ql]=quality(dpi);
+      const b=el("button","opt");b.type="button";b.setAttribute("role","radio");b.dataset.v=o.v;
+      const fr=el("div","a3");const im=new Image();im.src="img/"+o.img+".jpg";im.alt=`${f.t}: ${o.label}`;im.loading="lazy";fr.append(im);fr.append(el("span","tag","A3"));
+      const tt=el("div","opt-title");tt.append(el("span",null,o.label));tt.append(el("span","check"));
+      const meta=el("div","meta");meta.append(el("span","chip "+qc,ql));meta.append(el("span","px",`${w}×${h} px · ${dpi} dpi`));
+      const ta=el("div","tally");ta.dataset.tally=f.id+"|"+o.v;
+      b.append(fr,tt,meta,ta);
+      b.addEventListener("click",()=>choose(f.id,o.v));
+      opts.append(b);
+    }
+    card.append(head,opts);
+    document.getElementById(f.g===1?"g1":"g2").append(card);
+  }
+}
+function choose(fid,v){
+  picks[fid]=v;
+  try{localStorage.setItem("cartazes-picks",JSON.stringify(picks));}catch(e){}
+  render();
+}
+function render(){
+  document.querySelectorAll(".film").forEach(c=>{
+    const fid=c.dataset.film;
+    c.querySelectorAll(".opt").forEach(b=>{
+      const on=picks[fid]===b.dataset.v;b.setAttribute("aria-checked",on?"true":"false");b.tabIndex=0;
+    });
+  });
+  const n=FILMS.filter(f=>picks[f.id]).length;
+  document.getElementById("count").textContent=n;
+  document.getElementById("total").textContent=FILMS.length;
+  document.querySelectorAll("[data-tally]").forEach(t=>{
+    const c=tallies[t.dataset.tally]||0;
+    t.textContent="";
+  });
+}
+function voteText(){
+  const lines=["Voto — Cartazes de Natal"];
+  if(nome.value.trim())lines.push("Nome: "+nome.value.trim());
+  let n1=0,n2=0;
+  for(const f of FILMS){
+    if(f.id==="grinch")lines.push("","Contemporâneos");
+    if(f.id==="wonderful")lines.push("","Clássicos");
+    const num=f.g===1?++n1:++n2;
+    lines.push(`${num}. ${f.t}: ${picks[f.id]?labelOf(f.id,picks[f.id]):"(sem escolha)"}`);
+  }
+  return lines.join("\n");
+}
+const status=document.getElementById("status");
+document.getElementById("copy").addEventListener("click",()=>{
+  const txt=voteText();const box=document.getElementById("copybox");
+  const fallback=()=>{box.value=txt;box.hidden=false;box.focus();box.select();status.textContent="Copie o texto abaixo e cole no grupo.";};
+  try{
+    navigator.clipboard.writeText(txt).then(()=>{box.hidden=true;status.textContent="Voto copiado. Agora é só colar no grupo do WhatsApp.";},fallback);
+  }catch(e){fallback();}
+});
+
+build();render();
+document.addEventListener("keydown",e=>{
+  const b=e.target.closest&&e.target.closest(".opt");
+  if(b&&(e.key===" "||e.key==="Enter")){e.preventDefault();b.click();}
+});
+</script>
+
+</body>
+</html>
